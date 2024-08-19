@@ -1,0 +1,2 @@
+# TemperatureHumidity-GoogleCalendarLog
+ ESP32とGoogle Apps Scriptを使って気温と湿度のデータをGoogleカレンダーに記録する
