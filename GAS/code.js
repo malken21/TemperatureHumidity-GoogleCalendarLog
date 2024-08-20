@@ -6,7 +6,7 @@ function doGet(e) {
         // 湿度
         const h = e.parameter.h;
         // 日付
-        const d = new Date(e.parameter.d);
+        const d = new Date(parseInt(e.parameter.d) * 1000);
         // カレンダーにイベント追加
         addEvent(t, h, d);
 
