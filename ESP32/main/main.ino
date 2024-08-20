@@ -37,7 +37,7 @@ void loop()
   }
 
   // もし 分の値が 30で割り切れる場合 なら run() を実行
-  if (timeinfo.tm_min % 30 = 0)
+  if (timeinfo.tm_min % 30 == 0)
   {
     // 3回 繰り返す (再試行回数 3回)
     for (int i = 0; i < 3; i++)
