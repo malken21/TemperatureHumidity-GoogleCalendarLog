@@ -36,8 +36,8 @@ void loop()
     return;
   }
 
-  // 毎時00分にGETリクエストを送信
-  if (timeinfo.tm_min == 0)
+  // もし 分の値が 30で割り切れる場合 なら run() を実行
+  if (timeinfo.tm_min % 30 = 0)
   {
     // 3回 繰り返す (再試行回数 3回)
     for (int i = 0; i < 3; i++)
@@ -77,5 +77,35 @@ bool run()
   Serial.print("Humidity: ");
   Serial.print(h);
   Serial.println(" %");
+
+  // 現在のエポックタイムを取得
+  time_t now;
+  time(&now);
+
+  // 今回リクエストする URL を生成
+  char url[150];
+  char buf_t[5];
+  char buf_h[5];
+  dtostrf(t, 0, 1, buf_t);
+  dtostrf(h, 0, 1, buf_h);
+  sprintf(url, "%s?t=%s&h=%s&d=%ld", URL, buf_t, buf_h, now);
+
+  // WiFi に接続できなかったら
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("Failed to connect to WiFi!");
+    return false;
+  }
+
+  HTTPClient http;
+  http.begin(url); // URLにアクセス
+  int httpCode = http.GET();
+  Serial.print("StatusCode: ");
+  Serial.println(httpCode);
+  http.end(); // 接続を閉じる
+
+  // もし http ステータスコードが 400番 以上だったら false
+  if (httpCode >= 400)
+    return false;
   return true;
 }
