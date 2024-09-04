@@ -16,8 +16,8 @@ void setup()
   // WiFi 接続待ち
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(1000);
     Serial.println("Connecting to WiFi...");
+    delay(1000);
   }
   Serial.print("Connected to ");
   Serial.println(SSID);
