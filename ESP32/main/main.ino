@@ -19,6 +19,8 @@ void setup()
     delay(1000);
     Serial.println("Connecting to WiFi...");
   }
+  Serial.print("Connected to ");
+  Serial.println(SSID);
   // DHTセンサー 初期化
   dht.begin();
 
