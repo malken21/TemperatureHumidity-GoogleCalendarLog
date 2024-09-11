@@ -17,6 +17,8 @@ void setup()
 
   Serial.print("Connected to ");
   Serial.println(SSID);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
 
   // DHTセンサー 初期化
   dht.begin();
