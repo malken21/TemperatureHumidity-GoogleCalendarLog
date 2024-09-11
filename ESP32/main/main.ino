@@ -13,14 +13,11 @@ void setup()
 
   // WiFi 接続開始
   WiFi.begin(SSID, PASSWORD);
-  // WiFi 接続待ち
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.println("Connecting to WiFi...");
-    delay(1000);
-  }
+  connect();
+
   Serial.print("Connected to ");
   Serial.println(SSID);
+
   // DHTセンサー 初期化
   dht.begin();
 
@@ -110,4 +107,26 @@ bool run()
   if (httpCode >= 400)
     return false;
   return true;
+}
+
+void connect()
+{
+  // 試行時間
+  unsigned long attemptTime = millis();
+
+  // 接続が成功するか、5秒経過するまで待つ
+  while (WiFi.status() != WL_CONNECTED && millis() - attemptTime < 5000)
+  {
+    Serial.println("Connecting to WiFi...");
+    delay(1000);
+  }
+
+  // もし接続できなかったら
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    // 再接続を試みる
+    WiFi.disconnect();
+    WiFi.reconnect();
+    connect();
+  }
 }
